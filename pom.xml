@@ -84,6 +84,7 @@
 	<modules>
 		<module>co.migueljimenez.rcose.experimentation</module>
 		<module>co.migueljimenez.rcose.evolution</module>
+		<module>co.migueljimenez.rcose.system</module>
 	</modules>
 
 	<build>

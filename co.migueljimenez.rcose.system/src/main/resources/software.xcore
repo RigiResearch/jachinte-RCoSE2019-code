@@ -1,0 +1,7 @@
+@Ecore(nsPrefix="system", nsURI="https://migueljimenez.co/rcose/system/software")
+@GenModel(
+    bundleManifest="false",
+    modelDirectory="co.migueljimenez.rcose.system/src/main/java-gen",
+    complianceLevel="8.0"
+)
+package co.migueljimenez.rcose.system.software
