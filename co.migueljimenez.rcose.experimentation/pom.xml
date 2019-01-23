@@ -63,6 +63,12 @@
 			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
 			<version>${xtextVersion}</version>
 		</dependency>
+		<dependency>
+			<!-- Evolution models -->
+			<groupId>co.migueljimenez</groupId>
+			<artifactId>co.migueljimenez.rcose.evolution</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
