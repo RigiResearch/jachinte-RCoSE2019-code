@@ -1,0 +1,49 @@
+@Ecore(nsPrefix="system", nsURI="https://migueljimenez.co/rcose/system/types")
+@GenModel(
+    bundleManifest="false",
+    modelDirectory="co.migueljimenez.rcose.system/src/main/java-gen",
+    complianceLevel="8.0"
+)
+package co.migueljimenez.rcose.system.types
+
+type FunctionObject<T, R> wraps java.util.function.Function
+
+abstract class ValueType {
+}
+
+class Set<T extends ValueType> extends ValueType {
+	T[] elements
+}
+
+class Number extends ValueType {
+	Double value
+}
+
+class Parameter {
+	id String name
+	refers ValueType ^type
+}
+
+class Function<T extends ValueType, R extends ValueType> extends ValueType {
+	id String name
+	refers Parameter[] parameters
+}
+
+enum Operator {
+	EQUAL,
+	GREATER_THAN,
+	GREATER_THAN_OR_EQUAL,
+	LESS_THAN,
+	LESS_THAN_OR_EQUAL,
+	NOT_EQUAL
+}
+
+class Expression {
+	refers Parameter[] parameters
+}
+
+class BinaryExpression extends Expression {
+	Operator operator
+	contains Expression left
+	contains Expression right
+}

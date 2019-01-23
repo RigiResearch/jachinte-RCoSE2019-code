@@ -5,3 +5,13 @@
     complianceLevel="8.0"
 )
 package co.migueljimenez.rcose.experimentation
+
+import co.migueljimenez.rcose.system.qos.Duration
+import co.migueljimenez.rcose.system.types.Expression
+
+class Experiment {
+	String name
+	String description
+	Duration maxTimespan
+	refers Expression hypothesis
+}
