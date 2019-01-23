@@ -4,4 +4,4 @@
     modelDirectory="co.migueljimenez.rcose.experimentation/src/main/java-gen",
     complianceLevel="8.0"
 )
-package co.migueljimenez.rcose.experimentation.metamodel
+package co.migueljimenez.rcose.experimentation
