@@ -6,17 +6,9 @@
 )
 package co.migueljimenez.rcose.system.software
 
-import co.migueljimenez.rcose.system.qos.QoSMetric
-import co.migueljimenez.rcose.system.types.ValueType
-
 abstract class Resource {
 }
 
 class Service extends Resource {
 	id String name	
-}
-
-class Variable<T extends Resource> extends ValueType {
-	refers QoSMetric<T> metric
-	refers T resource
 }

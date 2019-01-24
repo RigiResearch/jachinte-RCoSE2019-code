@@ -4,18 +4,15 @@
 	modelDirectory="co.migueljimenez.rcose.system/src/main/java-gen",
 	complianceLevel="8.0"
 )
+// Adapted from A Survey on Quality Service Description, 2013
 package co.migueljimenez.rcose.system.qos
 
-import co.migueljimenez.rcose.system.types.ValueType
+import co.migueljimenez.rcose.system.software.Resource
+import co.migueljimenez.rcose.system.types.Duration
 import co.migueljimenez.rcose.system.types.Function
 import co.migueljimenez.rcose.system.types.Number
-import java.time.Period
-import java.time.Duration
-import co.migueljimenez.rcose.system.software.Resource
-
-type Period wraps Period
-
-type Duration wraps Duration
+import co.migueljimenez.rcose.system.types.Period
+import co.migueljimenez.rcose.system.types.Set
 
 enum Direction {
 	INCREASING,
@@ -36,7 +33,7 @@ class DerivedUnit extends Unit {
 	refers Unit unit
 }
 
-class QoSObject {
+abstract class QoSObject {
 }
 
 class QoSCategory {
@@ -62,13 +59,12 @@ abstract class QoSMetric<T extends Resource> extends QoSObject {
 	String name
 	String description
 	Double weight
-	refers T resourceType
-	refers ValueType ^type
+	refers T resource
 }
 
 class CompositeMetric<T extends Resource> extends QoSMetric<T> {
 	refers QoSMetric<T>[] components
-	refers Function<Number, Number> evaluation
+	refers Function<Set<Number>, Number> assessment
 }
 
 class DynamicMetric<T extends Resource> extends QoSMetric<T> {

@@ -6,30 +6,81 @@
 )
 package co.migueljimenez.rcose.system.types
 
+import java.time.Duration
+import java.time.Period
+
+type Period wraps Period
+
+type Duration wraps Duration
+
 type FunctionObject<T, R> wraps java.util.function.Function
 
-abstract class ValueType {
+abstract class Value {
 }
 
-class Set<T extends ValueType> extends ValueType {
+class Set<T extends Value> extends Value {
 	T[] elements
 }
 
-class Number extends ValueType {
+class Bool extends Value {
+	Boolean value
+}
+
+class Number extends Value {
 	Double value
+}
+
+class Text extends Value {
+	String value
 }
 
 class Parameter {
 	id String name
-	refers ValueType ^type
+	refers Value ^type
 }
 
-class Function<T extends ValueType, R extends ValueType> extends ValueType {
-	id String name
+class Function<T extends Value, R extends Value> extends Value {
+	String name
 	refers Parameter[] parameters
 }
 
-enum Operator {
+abstract class Expression {
+	String value
+	refers Parameter[] parameters
+}
+
+class UnaryExpression extends Expression {
+	refers Operator operator
+}
+
+class BinaryExpression extends Expression {
+	refers Operator operator
+	refers Expression left
+	refers Expression right
+}
+
+abstract class Operator {
+}
+
+class ArithmeticOperator extends Operator {
+	ArithmeticValue value
+}
+
+class LogicOperator extends Operator {
+	LogicValue value
+}
+
+class RelationalOperator extends Operator {
+	RelationalValue value
+}
+
+enum LogicValue {
+	AND,
+	NOT,
+	OR
+}
+
+enum RelationalValue {
 	EQUAL,
 	GREATER_THAN,
 	GREATER_THAN_OR_EQUAL,
@@ -38,12 +89,11 @@ enum Operator {
 	NOT_EQUAL
 }
 
-class Expression {
-	refers Parameter[] parameters
-}
-
-class BinaryExpression extends Expression {
-	Operator operator
-	contains Expression left
-	contains Expression right
+enum ArithmeticValue {
+	DIVIDE,
+	MINUS,
+	MODULO,
+	MULTIPLY,
+	PLUS,
+	POWER
 }

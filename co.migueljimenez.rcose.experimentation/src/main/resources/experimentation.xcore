@@ -6,12 +6,156 @@
 )
 package co.migueljimenez.rcose.experimentation
 
-import co.migueljimenez.rcose.system.qos.Duration
+import co.migueljimenez.rcose.system.types.Bool
+import co.migueljimenez.rcose.system.types.Duration
 import co.migueljimenez.rcose.system.types.Expression
+import co.migueljimenez.rcose.system.types.Function
+import co.migueljimenez.rcose.system.types.Value
 
-class Experiment {
-	String name
-	String description
-	Duration maxTimespan
+abstract class Experiment {
+	refers Scope scope
+	refers ImplementationTechnique implementationTechnique
 	refers Expression hypothesis
+	refers Trial[] trials
+	refers DependentVariable[] outputs
+}
+
+// What is studied?
+enum ObjectOfStudy {
+	PRODUCT,
+	PROCESS,
+	MODEL,
+	METRIC,
+	THEORY
+}
+
+// What is the intention?
+enum Purpose {
+	CHARACTERIZE,
+	MONITOR,
+	EVALUATE,
+	PREDICT,
+	CONTROL,
+	CHANGE
+}
+
+// What effect is studied?
+enum QualityFocus {
+	EFFECTIVENESS,
+	COST,
+	RELIABILITY,
+	MAINTAINABILITY,
+	PORTABILITY
+}
+
+// Whose view?
+enum Perspective {
+	DEVELOPER,
+	MODIFIER,
+	MAINTAINER,
+	PROJECT_MANAGER,
+	CORPORATE_MANAGER,
+	CUSTOMER,
+	USER,
+	RESEARCHER
+}
+
+// Where is the studied conducted?
+enum Context {
+	OBJECTS,
+	SUBJECTS
+}
+
+// Goal definition framework (Experimentation in Software Engineering, 2012)
+class Scope {
+	ObjectOfStudy object
+	Purpose purpose
+	QualityFocus focus
+	Perspective perspective
+	Context context
+}
+
+class Trial {
+	int order
+	Duration maximumTimespan
+	refers Object object
+	refers Subject subject
+	refers Treatment treatment
+}
+
+class Treatment {
+	refers IndependentVariable factor
+	refers Function<Value, Value> application
+	// e.g., situational/contextual variables
+	refers ExtraneousVariable[] confoundings
+}
+
+class Object {
+	// e.g., a service
+}
+
+class Subject {
+	// e.g., an autonomic manager
+}
+
+abstract class Variable {
+}
+
+class IndependentVariable extends Variable {
+}
+
+class DependentVariable extends Variable {
+}
+
+class ExtraneousVariable extends Variable {
+}
+
+class ControlledExperiment extends Experiment {
+}
+
+class FieldExperiment extends Experiment {
+	refers DeploymentStrategy strategy
+}
+
+class NaturalExperiment extends Experiment {
+}
+
+abstract class ImplementationTechnique {
+}
+
+class FeatureToggles extends ImplementationTechnique {
+}
+
+abstract class FeatureVariant extends ImplementationTechnique {
+}
+
+class TrafficRouting extends FeatureVariant {
+}
+
+class TrafficSimulation extends FeatureVariant {
+}
+
+class TrafficEmulation extends FeatureVariant {
+}
+
+class RegressionTesting extends FeatureVariant {
+}
+
+abstract class DeploymentStrategy {
+}
+
+class CanaryRelease extends DeploymentStrategy {
+	Double percentage
+}
+
+class GradualRollout extends DeploymentStrategy {
+	Double percentageStep
+	Duration timeStep
+}
+
+class AB extends DeploymentStrategy {
+	refers Function<Value, Bool> classifier
+}
+
+class DarkLaunch extends DeploymentStrategy {
 }
