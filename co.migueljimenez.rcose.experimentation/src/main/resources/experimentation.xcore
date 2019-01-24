@@ -10,7 +10,8 @@ import co.migueljimenez.rcose.system.types.Bool
 import co.migueljimenez.rcose.system.types.Duration
 import co.migueljimenez.rcose.system.types.Expression
 import co.migueljimenez.rcose.system.types.Function
-import co.migueljimenez.rcose.system.types.Value
+import co.migueljimenez.rcose.system.types.Type
+import co.migueljimenez.rcose.system.types.Pair
 
 abstract class Experiment {
 	refers Scope scope
@@ -85,9 +86,9 @@ class Trial {
 
 class Treatment {
 	refers IndependentVariable factor
-	refers Function<Value, Value> application
+	refers Function<Type, Type> application
 	// e.g., situational/contextual variables
-	refers ExtraneousVariable[] confoundings
+	refers Pair<ExtraneousVariable, Function<Type, Type>>[] confoundings
 }
 
 class Object {
@@ -98,7 +99,9 @@ class Subject {
 	// e.g., an autonomic manager
 }
 
-abstract class Variable {
+abstract class Variable extends Type {
+	Duration samplingRate
+	refers MeasuringInstrument instrument
 }
 
 class IndependentVariable extends Variable {
@@ -154,8 +157,14 @@ class GradualRollout extends DeploymentStrategy {
 }
 
 class AB extends DeploymentStrategy {
-	refers Function<Value, Bool> classifier
+	refers Function<Type, Bool> classifier
 }
 
 class DarkLaunch extends DeploymentStrategy {
+}
+
+class MeasuringInstrument {
+	// TODO I'm not sure about the use of a expression here
+	refers Expression measurementUncertainty
+	refers Expression instrumentError
 }

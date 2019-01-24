@@ -10,5 +10,4 @@ abstract class Resource {
 }
 
 class Service extends Resource {
-	id String name	
 }

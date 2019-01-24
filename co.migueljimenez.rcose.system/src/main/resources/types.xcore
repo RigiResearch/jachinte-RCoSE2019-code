@@ -15,36 +15,41 @@ type Duration wraps Duration
 
 type FunctionObject<T, R> wraps java.util.function.Function
 
-abstract class Value {
+abstract class Type {
 }
 
-class Set<T extends Value> extends Value {
+class Set<T extends Type> extends Type {
 	T[] elements
 }
 
-class Bool extends Value {
+class Bool extends Type {
 	Boolean value
 }
 
-class Number extends Value {
+class Number extends Type {
 	Double value
 }
 
-class Text extends Value {
+class Text extends Type {
 	String value
+}
+
+class Pair<K extends Type, V extends Type> {
+	K key
+	V value
 }
 
 class Parameter {
 	id String name
-	refers Value ^type
+	refers Type ^type
 }
 
-class Function<T extends Value, R extends Value> extends Value {
+class Function<T extends Type, R extends Type> extends Type {
 	String name
 	refers Parameter[] parameters
 }
 
-abstract class Expression {
+abstract class Expression extends Type {
 	String value
 	refers Parameter[] parameters
 }
