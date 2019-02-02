@@ -126,7 +126,7 @@ class NaturalExperiment extends Experiment {
 abstract class ImplementationTechnique {
 }
 
-class FeatureToggles extends ImplementationTechnique {
+class FeatureToggle extends ImplementationTechnique {
 }
 
 abstract class FeatureVariant extends ImplementationTechnique {
